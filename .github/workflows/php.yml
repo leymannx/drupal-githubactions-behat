@@ -25,8 +25,9 @@ jobs:
         composer validate
         composer global require hirak/prestissimo -n -q --prefer-dist
         composer install -n -q --prefer-dist
-        echo "export PATH=$GITHUB_WORKSPACE/vendor/bin:$PATH" >> $HOME/.bashrc
-        source $HOME/.bashrc
+        echo 'export PATH="$PATH:$GITHUB_WORKSPACE/vendor/bin"' >> ~/.bashrc
+        source ~/.bashrc
+        cat ~/.bashrc
         drush --version
 
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
