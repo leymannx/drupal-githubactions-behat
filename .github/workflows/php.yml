@@ -20,19 +20,17 @@ jobs:
 
     - name: Composer
       run: |
-        pwd
         composer --version
         composer validate
         composer global require hirak/prestissimo -n -q --prefer-dist
         composer install -n -q --prefer-dist
         echo "export PATH=$PATH:$GITHUB_WORKSPACE/vendor/bin" >> ~/.bash_profile
+        source ~/.bash_profile
+        drush --version
 
-    - name: Drush
+    - name: Drupal
       shell: bash -l {0}
       run: |
-        echo $PATH
-        cat ~/.bash_profile
-        vendor/bin/drush --version
         drush --version
 
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
