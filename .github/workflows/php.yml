@@ -20,10 +20,10 @@ jobs:
 
     - name: Composer
       run: |
+        pwd
         composer --version
-        composer global require hirak/prestissimo
-        composer validate
-        composer install -n --prefer-dist --no-progress --no-suggest
+        composer global require hirak/prestissimo -n -q --prefer-dist
+        composer install -n -q --prefer-dist
 
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
