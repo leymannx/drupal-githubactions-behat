@@ -19,7 +19,6 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Composer
-      shell: bash -l {0}
       run: |
         pwd
         composer --version
@@ -27,7 +26,10 @@ jobs:
         composer global require hirak/prestissimo -n -q --prefer-dist
         composer install -n -q --prefer-dist
         echo "export PATH=$PATH:$GITHUB_WORKSPACE/vendor/bin" >> ~/.bashrc
-        source ~/.bashrc
+
+    - name: Drush
+      shell: bash -l {0}
+      run: |
         echo $PATH
         cat ~/.bashrc
         vendor/bin/drush --version
