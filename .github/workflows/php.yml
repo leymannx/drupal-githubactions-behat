@@ -25,13 +25,13 @@ jobs:
         composer validate
         composer global require hirak/prestissimo -n -q --prefer-dist
         composer install -n -q --prefer-dist
-        echo "export PATH=$PATH:$GITHUB_WORKSPACE/vendor/bin" >> ~/.bashrc
+        echo "export PATH=$PATH:$GITHUB_WORKSPACE/vendor/bin" >> ~/.bashr_profile
 
     - name: Drush
       shell: bash -l {0}
       run: |
         echo $PATH
-        cat ~/.bashrc
+        cat ~/.bash_profile
         vendor/bin/drush --version
         drush --version
 
