@@ -28,6 +28,7 @@ jobs:
         composer install -n -q --prefer-dist
         echo "export PATH=$PATH:$GITHUB_WORKSPACE/vendor/bin" >> ~/.bashrc
         source ~/.bashrc
+        echo $PATH
         cat ~/.bashrc
         vendor/bin/drush --version
         drush --version
