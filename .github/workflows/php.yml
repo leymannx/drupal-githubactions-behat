@@ -29,7 +29,6 @@ jobs:
         drush --version
 
     - name: Drupal
-      shell: bash -l {0}
       run: |
         drush --version
 
