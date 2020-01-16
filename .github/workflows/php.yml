@@ -20,11 +20,15 @@ jobs:
 
     - name: Composer
       run: |
-        whoami
         pwd
-        ls -lhA
-        cd ~/
-        ls -lhA
+        composer --version
+        composer global require hirak/prestissimo -n -q
+        composer validate
+        composer install -n -q --prefer-dist
+        echo 'export PATH=$GITHUB_WORKSPACE/vendor/bin:$PATH' >> $BASH_ENV
+        echo '$BASH_ENV'
+        source $HOME/.bashrc
+        drush --version
 
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
