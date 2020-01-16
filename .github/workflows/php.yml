@@ -25,8 +25,8 @@ jobs:
         composer global require hirak/prestissimo -n -q
         composer validate
         composer install -n -q --prefer-dist
-        echo 'export PATH=$GITHUB_WORKSPACE/vendor/bin:$PATH' >> $BASH_ENV
-        echo '$BASH_ENV'
+        echo "export PATH=$GITHUB_WORKSPACE/vendor/bin:$PATH" >> "$BASH_ENV"
+        echo "$BASH_ENV"
         source $HOME/.bashrc
         drush --version
 
