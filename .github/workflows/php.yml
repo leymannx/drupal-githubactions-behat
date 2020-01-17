@@ -36,11 +36,11 @@ jobs:
     - name: Behat
       shell: bash -l {0}
       run: |
+        echo 127.0.0.1 github-actions.localhost | sudo tee -a /etc/hosts
         sudo apt install apache2
         sudo cp .github/workflows/github-actions.conf /etc/apache2/sites-available/github-actions.conf
         sudo a2ensite github-actions
-        sudo service apache2 start
-        echo 127.0.0.1 github-actions.localhost | sudo tee -a /etc/hosts
+        sudo service apache2 restart
         sudo cp .github/workflows/.htaccess web/.htaccess
         curl -Is -K HEAD http://github-actions.localhost | head -n 1
         curl http://github-actions.localhost
