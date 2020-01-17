@@ -29,7 +29,9 @@ jobs:
     - name: Drupal
       shell: bash -l {0}
       run: |
-        mysql --defaults-extra-file=.github/workflows/my.cnf -e "show databases"
+        mysql --defaults-extra-file=.github/workflows/my.cnf -e "create database if not exists github_actions"
+        cp .github/workflows/settings.local.php web/sites/default/settings.local.php
+        drush site:install --site-name "Hello World"
 
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
