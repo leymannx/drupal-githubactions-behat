@@ -36,12 +36,13 @@ jobs:
     - name: Behat
       shell: bash -l {0}
       run: |
+        sudo apt install apache2
         sudo cp .github/workflows/github-actions.conf /etc/apache2/sites-available/github-actions.conf
         sudo a2ensite github-actions
         sudo service apache2 start
         echo 127.0.0.1 github-actions.localhost | sudo tee -a /etc/hosts
         sudo cp .github/workflows/.htaccess web/.htaccess
-        wget -p http://gitub-actions.localhost -O /dev/null
+        wget -p http://gitub-actions.localhost
 
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
