@@ -41,3 +41,9 @@ jobs:
         image: circleci/mariadb:latest
         ports:
           - 3306
+    steps:
+      - name: drush si
+        run: |
+          whoami
+          pwd
+          php -v
