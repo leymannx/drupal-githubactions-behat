@@ -14,25 +14,30 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    steps:
+      - name: git checkout
+        uses: actions/checkout@v2
+
+      - name: composer install
+        run: |
+          php -v
+          composer --version
+          composer validate
+          composer global require hirak/prestissimo -n --prefer-dist
+          composer install -n --prefer-dist
+          echo "export PATH=$PATH:$GITHUB_WORKSPACE/vendor/bin" >> ~/.bash_profile
+
+  drupal:
+    name: Drupal
+    needs: build
     container:
       image: circleci/php:7.3-apache-node-browsers
-
+      ports:
+        - 80
+      volumes:
+        - /var/www/:$GITHUB_WORKSPACE
     services:
       mariadb:
         image: circleci/mariadb:latest
         ports:
-          - 33306:3306
-
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Composer
-      run: |
-        php -v
-        whoami
-        pwd
-        composer --version
-        composer validate
-        composer global require hirak/prestissimo -n --prefer-dist
-        composer install -n --prefer-dist
-        echo "export PATH=$PATH:$GITHUB_WORKSPACE/vendor/bin" >> ~/.bash_profile
+          - 3306
