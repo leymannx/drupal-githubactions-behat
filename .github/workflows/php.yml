@@ -38,7 +38,7 @@ jobs:
       shell: bash -l {0}
       run: |
         sudo apt-get -y install apache2
-        apache2 -D GITHUB_WORKSPACE "$GITHUB_WORKSPACE"
+        apache2 -D GITHUB_WORKSPACE="$GITHUB_WORKSPACE"
         sudo cp .github/workflows/github-actions.conf /etc/apache2/sites-available/github-actions.conf
         sudo a2ensite github-actions
         sudo service apache2 restart
