@@ -1,4 +1,4 @@
-name: PHP Composer
+name: Drupal Behat
 
 on:
   push:
@@ -14,6 +14,14 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    container:
+      image: circleci/php:7.3-apache-node-browsers
+
+    services:
+      mariadb:
+        image: circleci/mariadb:latest
+        ports:
+          - 33306:3306
 
     steps:
     - uses: actions/checkout@v2
@@ -21,34 +29,10 @@ jobs:
     - name: Composer
       run: |
         php -v
+        whoami
+        pwd
         composer --version
         composer validate
         composer global require hirak/prestissimo -n --prefer-dist
         composer install -n --prefer-dist
         echo "export PATH=$PATH:$GITHUB_WORKSPACE/vendor/bin" >> ~/.bash_profile
-
-    - name: Drupal
-      shell: bash -l {0}
-      run: |
-        mysql --defaults-extra-file=.github/workflows/my.cnf -e "create database if not exists github_actions"
-        cp .github/workflows/settings.local.php web/sites/default/settings.local.php
-        drush site:install --site-name "Hello World"
-
-    - name: Behat
-      shell: bash -l {0}
-      run: |
-        sudo apt-get -y install apache2
-        sudo apache2ctl -D GITHUB_WORKSPACE="$GITHUB_WORKSPACE"
-        sudo cp .github/workflows/github-actions.conf /etc/apache2/sites-available/github-actions.conf
-        sudo a2ensite github-actions
-        sudo service apache2 restart
-        sudo cp .github/workflows/.htaccess web/.htaccess
-        echo 127.0.0.1 github-actions.localhost | sudo tee -a /etc/hosts
-        curl -Is -K HEAD http://github-actions.localhost | head -n 1
-        curl http://github-actions.localhost
-
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
-
-    # - name: Run test suite
-    #   run: composer run-script test
