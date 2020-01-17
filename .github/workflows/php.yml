@@ -48,3 +48,5 @@ jobs:
           whoami
           pwd
           php -v
+          cd /var/www
+          ls -lhA
