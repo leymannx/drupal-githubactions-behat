@@ -22,16 +22,14 @@ jobs:
       run: |
         composer --version
         composer validate
-        composer global require hirak/prestissimo -n -q --prefer-dist
-        composer install -n -q --prefer-dist
+        composer global require hirak/prestissimo -n --prefer-dist
+        composer install -n --prefer-dist
         echo "export PATH=$PATH:$GITHUB_WORKSPACE/vendor/bin" >> ~/.bash_profile
-        source ~/.bash_profile
-        drush --version
 
     - name: Drupal
       shell: bash -l {0}
       run: |
-        drush --version
+        mysql --defaults-extra-file=.github/worlflows/db.cnf -e "show databases"
 
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
